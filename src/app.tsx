@@ -45,8 +45,6 @@ export function App() {
       post.title.toLowerCase().includes(searchInputValue.toLowerCase()),
     )
 
-    console.log(`posts filtered: ${JSON.stringify(newPostsFiltered, null, 2)}`)
-
     setPostsFiltered(newPostsFiltered)
   }
 
