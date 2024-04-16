@@ -1,23 +1,9 @@
-import { GithubProfile } from '@/types/profile'
-import { useEffect, useState } from 'react'
 import { ProfileCardFooter } from './footer'
 import { ProfileCardHeader } from './header'
+import { useProfile } from '@/hooks/use-profile'
 
 export function ProfileCard() {
-  const [profile, setProfile] = useState<GithubProfile>({
-    name: '',
-    html_url: '',
-    bio: '',
-    login: '',
-    company: '',
-    followers: 0,
-  })
-
-  useEffect(() => {
-    fetch('https://api.github.com/users/wcardosos', {
-      method: 'GET',
-    }).then((response) => response.json().then((data) => setProfile(data)))
-  }, [])
+  const profile = useProfile()
 
   return (
     <div className="bg-base-profile max-w-[54rem] w-full py-8 px-10 flex gap-8 rounded-[0.625rem] shadow-md">
