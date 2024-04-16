@@ -20,7 +20,7 @@ export function ProfileCard() {
   }, [])
 
   return (
-    <div className="bg-base-profile w-[54rem] py-8 px-10 flex gap-8 rounded-[0.625rem] shadow-md">
+    <div className="bg-base-profile max-w-[54rem] w-full py-8 px-10 flex gap-8 rounded-[0.625rem] shadow-md">
       <img
         src="https://github.com/wcardosos.png"
         className="w-36 h-36 rounded-lg"
