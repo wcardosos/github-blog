@@ -1,3 +1,4 @@
+import { api } from '@/lib/api'
 import { GithubProfile } from '@/types/profile'
 import { useEffect, useState } from 'react'
 
@@ -11,10 +12,14 @@ export function useProfile() {
     followers: 0,
   })
 
+  const fetchProfile = async () => {
+    const response = await api.get('/users/wcardosos')
+
+    setProfile(response.data)
+  }
+
   useEffect(() => {
-    fetch('https://api.github.com/users/wcardosos', {
-      method: 'GET',
-    }).then((response) => response.json().then((data) => setProfile(data)))
+    fetchProfile()
   }, [])
 
   return profile
