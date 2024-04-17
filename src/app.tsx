@@ -1,55 +1,33 @@
 import { Post } from '@/types/post'
 import { Header } from './components/header'
 import { PostCard } from './components/posts/card'
-import { useState } from 'react'
-
-const posts: Post[] = [
-  {
-    title: 'JavaScript data types and data structures',
-    createdAt: new Date('2024-04-14 06:00'),
-    text: `
-    Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.
-
-    Dynamic typing
-    JavaScript is a loosely typed and dynamic language. Variables in JavaScript are not directly associated with any particular value type, and any variable can be assigned (and re-assigned) values of all types:
-    
-    let foo = 42; // foo is now a number
-    foo = 'bar'; // foo is now a string
-    foo = true; // foo is now a boolean
-    `,
-  },
-  {
-    title: 'JavaScript data types and data structures',
-    createdAt: new Date('2024-04-12 06:00'),
-    text: `
-    Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.
-
-    Dynamic typing
-    JavaScript is a loosely typed and dynamic language. Variables in JavaScript are not directly associated with any particular value type, and any variable can be assigned (and re-assigned) values of all types:
-    
-    let foo = 42; // foo is now a number
-    foo = 'bar'; // foo is now a string
-    foo = true; // foo is now a boolean
-    `,
-  },
-]
+import { useEffect, useState } from 'react'
+import { api } from './lib/api'
 
 export function App() {
+  const [posts, setPosts] = useState<Post[]>([])
+  const [postsCount, setPostsCount] = useState<number>(0)
+
   const [searchInputValue, setSearchInputValue] = useState<string>('')
-  const [postsFiltered, setPostsFiltered] = useState(posts)
 
   const onChangeSearchInput = (event: React.FormEvent<HTMLInputElement>) => {
     setSearchInputValue(event.currentTarget.value)
-
-    const newPostsFiltered = posts.filter((post) =>
-      post.title.toLowerCase().includes(searchInputValue.toLowerCase()),
-    )
-
-    setPostsFiltered(newPostsFiltered)
   }
 
-  const publishCount = posts.length
-  const publishCountText = `${publishCount} publicaç${publishCount > 1 ? 'ões' : 'ão'}`
+  const publishCountText = `${postsCount} publicaç${postsCount > 1 ? 'ões' : 'ão'}`
+
+  useEffect(() => {
+    api
+      .get('/search/issues?q=%20repo:wcardosos/github-blog', {
+        headers: {
+          Accept: 'application/vnd.github+json',
+        },
+      })
+      .then((response) => {
+        setPosts(response.data.items)
+        setPostsCount(response.data.total_count)
+      })
+  }, [])
 
   return (
     <>
@@ -72,7 +50,7 @@ export function App() {
             />
           </div>
           <div className="grid grid-cols-2 gap-8 mt-12">
-            {postsFiltered.map((post, index) => (
+            {posts.map((post, index) => (
               <PostCard key={`post-${index}`} post={post} />
             ))}
           </div>
