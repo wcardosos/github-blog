@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { Home } from './views/home'
+import { Post } from './views/post'
 
 const routes = [
   {
@@ -8,7 +9,7 @@ const routes = [
   },
   {
     path: '/:postId',
-    element: <div>post</div>,
+    element: <Post />,
   },
 ]
 

@@ -2,7 +2,7 @@ import { ProfileCardFooter } from './footer'
 import { ProfileCardHeader } from './header'
 import { useProfile } from '@/hooks/use-profile'
 
-export function ProfileCard() {
+export function Profile() {
   const profile = useProfile()
 
   return (

@@ -4,5 +4,7 @@ declare module '@/types/post' {
     created_at: string
     body: string
     number: number
+    comments: number
+    url: string
   }
 }

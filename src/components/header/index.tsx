@@ -1,8 +1,8 @@
 import logo from '../../assets/images/logo.png'
 import cover from '../../assets/images/cover.png'
-import { ProfileCard } from './profile/card'
+import { PropsWithChildren } from 'react'
 
-export function Header() {
+export function Header({ children }: PropsWithChildren) {
   return (
     <header className="relative">
       <img
@@ -13,7 +13,7 @@ export function Header() {
       <div className="w-full">
         <div className="flex flex-col gap-12 items-center pt-16">
           <img src={logo} className="w-[9.25rem]" alt="" />
-          <ProfileCard />
+          {children}
         </div>
       </div>
     </header>
